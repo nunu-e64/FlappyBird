@@ -2,6 +2,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "CharacterReader.h"
+#include "Character.h"
 
 USING_NS_CC;
 
@@ -92,9 +93,23 @@ bool MainScene::init()
     Size size = Director::getInstance()->getVisibleSize();
     rootNode->setContentSize(size);
     ui::Helper::doLayout(rootNode);
-
-
     addChild(rootNode);
+    
+    character = rootNode->getChildByName("BackGround")->getChildByName<Character*>("Character");
+    assert(character);
 
     return true;
+}
+
+void MainScene::onEnter()
+{
+    Layer::onEnter();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [&](Touch* touch, Event* event)
+    {
+        this->character->jump();
+        return true;
+    };
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 }

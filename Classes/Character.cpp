@@ -7,6 +7,7 @@
 //
 
 #include "Character.h"
+USING_NS_CC;
 
 #pragma mark - Public methods
 
@@ -20,6 +21,11 @@ bool Character::init() {
     // retain the character animation timeline so it doesn't get deallocated
     this->timeline->retain();
 
+    this->scheduleUpdate();
+    this->velocity = 0;
+    this->accel = -100;
+    this->hasStarted = false;
+    
     return true;
 }
 
@@ -37,7 +43,15 @@ void Character::onExit()
     Node::onExit();
 }
 
-void Character::update()
+void Character::update(float dt)
 {
-    
+    if (!this->hasStarted) return;
+    this->velocity += this->accel;
+    this->setPosition(this->getPosition() + Vec2(0, this->velocity * dt));
+}
+
+void Character::jump()
+{
+    this->hasStarted = true;
+    this->velocity = 600;
 }

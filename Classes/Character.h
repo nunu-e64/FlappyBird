@@ -16,13 +16,18 @@ class Character : public cocos2d::Node {
 public:
     CREATE_FUNC(Character);
     bool init() override;
+    void jump();
 
 protected:
     cocostudio::timeline::ActionTimeline* timeline;
-    
+
     void onEnter() override;
     void onExit() override;
-    void update();
+    void update(float dt) override;
+
+    float velocity;
+    float accel;
+    bool hasStarted;
 };
 
 #endif /* defined(__FlappyBird__Character__) */
