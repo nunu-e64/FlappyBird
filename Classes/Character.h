@@ -18,6 +18,8 @@ public:
     bool init() override;
     void jump();
     cocos2d::Rect getRect();
+    void startFly();
+    void stopFly();
 
 protected:
     cocostudio::timeline::ActionTimeline* timeline;
@@ -31,6 +33,7 @@ protected:
     bool hasStarted;
     cocos2d::Rect rect;
     cocos2d::Size birdSize;
+    bool isFlying;
 };
 
 #endif /* defined(__FlappyBird__Character__) */

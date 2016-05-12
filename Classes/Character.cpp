@@ -48,6 +48,7 @@ void Character::onEnter()
     this->addChild(sprite);
     
     birdSize = spriteBird->getContentSize() * 0.8f;
+    
 }
 
 void Character::onExit()
@@ -58,14 +59,19 @@ void Character::onExit()
 void Character::update(float dt)
 {
     if (!this->hasStarted) return;
-    this->velocity += this->accel;
-    this->setPosition(this->getPosition() + Vec2(0, this->velocity * dt));
+    
+    if (this->isFlying)
+    {
+        this->velocity += this->accel;
+        this->setPosition(this->getPosition() + Vec2(0, this->velocity * dt));
+    }
 }
 
 void Character::jump()
 {
     this->hasStarted = true;
     this->velocity = JUMP_SPEED;
+    this->timeline->play("Fly", false);
 }
 
 Rect Character::getRect()
@@ -73,4 +79,14 @@ Rect Character::getRect()
     Rect rect = this->rect;
     rect.origin += this->getPosition();
     return rect;
+}
+
+void Character::startFly()
+{
+    this->isFlying = true;
+}
+
+void Character::stopFly()
+{
+    this->isFlying = false;
 }

@@ -108,6 +108,7 @@ bool MainScene::init()
     
     this->backGround->setGlobalZOrder(-1);
     this->ground->setGlobalZOrder(1);
+    this->character->setGlobalZOrder(1);
     
     return true;
 }
@@ -119,13 +120,28 @@ void MainScene::onEnter()
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = [&](Touch* touch, Event* event)
     {
-        this->character->jump();
+        switch (this->state) {
+        case State::Ready:
+            this->triggerPlaying();
+        case State::Playing:
+            this->character->jump();
+            break;
+        case State::GameOver:
+            Scene* nextGameScene = MainScene::createScene();
+            TransitionFade* transition = TransitionFade::create(1.0f, nextGameScene);
+            Director::getInstance()->replaceScene(transition);
+            break;
+        }
         return true;
     };
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
     
-    this->scheduleUpdate();
-    this->schedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle), OBSTACLE_TIME_SPAN);
+    this->triggerReady();
+}
+
+void onTouchBegan(Touch* touch, Event* event)
+{
+    
 }
 
 void MainScene::update(float dt)
@@ -143,7 +159,10 @@ void MainScene::update(float dt)
         
         for (Rect obstacleRect : obstacleRects) {
             bool hit = characterRect.intersectsRect(obstacleRect);
-            CCLOG("%s%f", (hit ? "Hit    " : "Not Hit"), dt);
+            if (hit)
+            {
+                this->triggerGameOver();
+            }
         }
     }
 }
@@ -167,4 +186,25 @@ void MainScene::createObstacle(float dt)
     }
 }
 
+void MainScene::triggerReady()
+{
+    this->state = State::Ready;
+    this->character->stopFly();
+}
+
+void MainScene::triggerPlaying(){
+    this->state = State::Playing;
+    this->character->startFly();
+    this->scheduleUpdate();
+    this->schedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle), OBSTACLE_TIME_SPAN);
+}
+
+void MainScene::triggerGameOver(){
+    this->state = State::GameOver;
+    this->unscheduleAllCallbacks();
+}
+
+void MainScene::triggerGameClear(){
+    this->state = State::GameClear;
+}
 

@@ -6,6 +6,14 @@
 
 class Character;
 
+enum State
+{
+    Ready,
+    Playing,
+    GameOver,
+    GameClear,
+};
+
 class MainScene : public cocos2d::Layer
 {
 public:
@@ -22,12 +30,17 @@ private:
     void onEnter() override;
     void update(float dt) override;
     void createObstacle(float dt);
+    void triggerReady();
+    void triggerPlaying();
+    void triggerGameOver();
+    void triggerGameClear();
     
     Character* character;
     cocos2d::Vector<Obstacle*> obstacles;
-    
     cocos2d::Node* backGround;
     cocos2d::Node* ground;
+    
+    State state;
 };
 
 #endif // __MAIN_SCENE_H__
