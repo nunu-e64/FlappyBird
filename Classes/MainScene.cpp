@@ -171,7 +171,7 @@ void MainScene::createObstacle(float dt)
 {
     // Create
     Obstacle* obstacle = dynamic_cast<Obstacle*>(CSLoader::createNode(("Obstacle.csb")));
-    this->addChild(obstacle);
+    this->backGround->addChild(obstacle);
     assert(obstacle);
 
     // Set Random PositionY
@@ -203,8 +203,3 @@ void MainScene::triggerGameOver(){
     this->state = State::GameOver;
     this->unscheduleAllCallbacks();
 }
-
-void MainScene::triggerGameClear(){
-    this->state = State::GameClear;
-}
-

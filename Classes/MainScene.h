@@ -11,7 +11,6 @@ enum State
     Ready,
     Playing,
     GameOver,
-    GameClear,
 };
 
 class MainScene : public cocos2d::Layer
@@ -33,7 +32,6 @@ private:
     void triggerReady();
     void triggerPlaying();
     void triggerGameOver();
-    void triggerGameClear();
     
     Character* character;
     cocos2d::Vector<Obstacle*> obstacles;
