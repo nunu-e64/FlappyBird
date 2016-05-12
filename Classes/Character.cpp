@@ -7,6 +7,7 @@
 //
 
 #include "Character.h"
+#include "Constants.h"
 USING_NS_CC;
 
 #pragma mark - Public methods
@@ -23,9 +24,9 @@ bool Character::init() {
 
     this->scheduleUpdate();
     this->velocity = 0;
-    this->accel = -100;
+    this->accel = GRAVITY_ACCEL;
     this->hasStarted = false;
-    
+
     return true;
 }
 
@@ -53,5 +54,5 @@ void Character::update(float dt)
 void Character::jump()
 {
     this->hasStarted = true;
-    this->velocity = 600;
+    this->velocity = JUMP_SPEED;
 }
