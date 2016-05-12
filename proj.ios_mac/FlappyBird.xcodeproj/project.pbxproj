@@ -57,6 +57,8 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CAD3B6F51CE3325A003E18C0 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD3B6F11CE3325A003E18C0 /* Character.cpp */; };
 		CAD3B6F61CE3325A003E18C0 /* CharacterReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD3B6F31CE3325A003E18C0 /* CharacterReader.cpp */; };
+		CAD3B6FC1CE41233003E18C0 /* Obstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD3B6F81CE41233003E18C0 /* Obstacle.cpp */; };
+		CAD3B6FD1CE41233003E18C0 /* ObstacleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD3B6FA1CE41233003E18C0 /* ObstacleReader.cpp */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -122,6 +124,10 @@
 		CAD3B6F31CE3325A003E18C0 /* CharacterReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterReader.cpp; sourceTree = "<group>"; };
 		CAD3B6F41CE3325A003E18C0 /* CharacterReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterReader.h; sourceTree = "<group>"; };
 		CAD3B6F71CE40F2C003E18C0 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Classes/Constants.h; sourceTree = "<group>"; };
+		CAD3B6F81CE41233003E18C0 /* Obstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Obstacle.cpp; sourceTree = "<group>"; };
+		CAD3B6F91CE41233003E18C0 /* Obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacle.h; sourceTree = "<group>"; };
+		CAD3B6FA1CE41233003E18C0 /* ObstacleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObstacleReader.cpp; sourceTree = "<group>"; };
+		CAD3B6FB1CE41233003E18C0 /* ObstacleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObstacleReader.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -253,12 +259,16 @@
 			children = (
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* MainScene.cpp */,
-				46880B8719C43A87006E1F66 /* MainScene.h */,
 				CAD3B6F11CE3325A003E18C0 /* Character.cpp */,
 				CAD3B6F21CE3325A003E18C0 /* Character.h */,
 				CAD3B6F31CE3325A003E18C0 /* CharacterReader.cpp */,
 				CAD3B6F41CE3325A003E18C0 /* CharacterReader.h */,
+				46880B8619C43A87006E1F66 /* MainScene.cpp */,
+				46880B8719C43A87006E1F66 /* MainScene.h */,
+				CAD3B6F81CE41233003E18C0 /* Obstacle.cpp */,
+				CAD3B6F91CE41233003E18C0 /* Obstacle.h */,
+				CAD3B6FA1CE41233003E18C0 /* ObstacleReader.cpp */,
+				CAD3B6FB1CE41233003E18C0 /* ObstacleReader.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -436,7 +446,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAD3B6F61CE3325A003E18C0 /* CharacterReader.cpp in Sources */,
+				CAD3B6FD1CE41233003E18C0 /* ObstacleReader.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				CAD3B6FC1CE41233003E18C0 /* Obstacle.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* MainScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				CAD3B6F51CE3325A003E18C0 /* Character.cpp in Sources */,

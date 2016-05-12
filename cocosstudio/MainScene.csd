@@ -6,10 +6,10 @@
       <ObjectData Name="Scene" ctype="GameNodeObjectData">
         <Size X="288.0000" Y="512.0000" />
         <Children>
-          <AbstractNodeData Name="BackGround" ActionTag="583895532" Tag="3" IconVisible="False" ctype="SpriteObjectData">
+          <AbstractNodeData Name="background" ActionTag="583895532" Tag="3" IconVisible="False" ctype="SpriteObjectData">
             <Size X="288.0000" Y="512.0000" />
             <Children>
-              <AbstractNodeData Name="Character" ActionTag="1704978900" Tag="6" IconVisible="True" LeftMargin="89.0000" RightMargin="199.0000" TopMargin="258.0000" BottomMargin="254.0000" StretchWidthEnable="False" StretchHeightEnable="False" InnerActionSpeed="1.0000" CustomSizeEnabled="False" ctype="ProjectNodeObjectData">
+              <AbstractNodeData Name="character" ActionTag="1704978900" Tag="6" IconVisible="True" LeftMargin="89.0000" RightMargin="199.0000" TopMargin="258.0000" BottomMargin="254.0000" StretchWidthEnable="False" StretchHeightEnable="False" InnerActionSpeed="1.0000" CustomSizeEnabled="False" ctype="ProjectNodeObjectData">
                 <Size X="0.0000" Y="0.0000" />
                 <AnchorPoint />
                 <Position X="89.0000" Y="254.0000" />

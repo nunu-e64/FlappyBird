@@ -3,6 +3,9 @@
 #include "ui/CocosGUI.h"
 #include "CharacterReader.h"
 #include "Character.h"
+#include "ObstacleReader.h"
+#include "Obstacle.h"
+#include "Constants.h"
 
 USING_NS_CC;
 
@@ -88,6 +91,7 @@ bool MainScene::init()
     
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CharacterReader", (ObjectFactory::Instance) CharacterReader::getInstance);
+    instance->registReaderObject("ObstacleReader", (ObjectFactory::Instance) ObstacleReader::getInstance);
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     Size size = Director::getInstance()->getVisibleSize();
@@ -95,9 +99,13 @@ bool MainScene::init()
     ui::Helper::doLayout(rootNode);
     addChild(rootNode);
     
-    character = rootNode->getChildByName("BackGround")->getChildByName<Character*>("Character");
-    assert(character);
-
+    this->backGround = rootNode->getChildByName("background");
+    this->ground = this->backGround->getChildByName("ground");
+    this->character = backGround->getChildByName<Character*>("character");
+    assert(this->backGround);
+    assert(this->ground);
+    assert(this->character);
+    
     return true;
 }
 
@@ -112,4 +120,31 @@ void MainScene::onEnter()
         return true;
     };
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
+    this->scheduleUpdate();
+    this->schedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle), OBSTACLE_TIME_SPAN);
 }
+
+void MainScene::update(float dt)
+{
+    for (auto obstacle : this->obstacles) {
+        obstacle->moveLeft(SCROLL_SPEED_X * dt);
+    }
+}
+
+void MainScene::createObstacle(float dt)
+{
+    Obstacle* obstacle = dynamic_cast<Obstacle*>(CSLoader::createNode(("Obstacle.csb")));
+    this->addChild(obstacle);
+    assert(obstacle);
+
+    obstacle->setPosition(Vec2(OBSTACLE_INIT_X, Lerp(OBSTACLE_MIN_Y, OBSTACLE_MAX_Y, CCRANDOM_0_1())));
+    this->obstacles.pushBack(obstacle);
+    
+    if (this->obstacles.size() > OBSTACLE_LIMIT) {
+        this->obstacles.front()->removeFromParent();
+        this->obstacles.erase(this->obstacles.begin());
+    }
+}
+
+
