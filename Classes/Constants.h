@@ -14,7 +14,7 @@ static const float JUMP_SPEED           = 300.0f;
 static const float OBSTACLE_MIN_Y       = 200.0f;
 static const float OBSTACLE_MAX_Y       = 400.0f;
 static const float OBSTACLE_TIME_SPAN   = 1.35f;
-static const float OBSTACLE_LIMIT       = 1;
+static const float OBSTACLE_LIMIT       = 5;
 static const float OBSTACLE_INIT_X      = 300.0f;
 static const float SCROLL_SPEED_X       = 120.0f;
 

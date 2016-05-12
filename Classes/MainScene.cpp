@@ -100,14 +100,13 @@ bool MainScene::init()
     addChild(rootNode);
     
     this->backGround = rootNode->getChildByName("background");
-    this->ground = this->backGround->getChildByName("ground");
     this->character = backGround->getChildByName<Character*>("character");
-    assert(this->backGround);
-    assert(this->ground);
-    assert(this->character);
+    this->groundA = this->backGround->getChildByName("groundA");
+    this->groundB = this->backGround->getChildByName("groundB");
     
     this->backGround->setGlobalZOrder(-1);
-    this->ground->setGlobalZOrder(1);
+    this->groundA->setGlobalZOrder(1);
+    this->groundB->setGlobalZOrder(1);
     this->character->setGlobalZOrder(1);
     
     return true;
@@ -150,8 +149,29 @@ void MainScene::update(float dt)
     for (auto obstacle : this->obstacles) {
         obstacle->moveLeft(SCROLL_SPEED_X * dt);
     }
+    
+    // Move Ground
+    this->groundA->setPosition(this->groundA->getPosition() + Vec2(-1, 0) * SCROLL_SPEED_X * dt);
+    this->groundB->setPosition(this->groundB->getPosition() + Vec2(-1, 0) * SCROLL_SPEED_X * dt);
 
-    // Collision Check
+    // Check Ground Position
+    auto groundScrollCheck = [&](Node* ground, Node* baddyGround) {
+        if (ground->getPositionX() + ground->getContentSize().width < 0)
+        {
+            ground->setPosition(baddyGround->getPosition() + Vec2(1, 0) * baddyGround->getContentSize().width);
+        }
+    };
+    groundScrollCheck(this->groundA, this->groundB);
+    groundScrollCheck(this->groundB, this->groundA);
+    
+    // Check Ground Collision
+    if (this->character->getRect().getMinY() < this->groundA->getPositionY())
+    {
+        this->character->setPosition(this->character->getPositionX(), this->groundA->getPositionY() + this->character->getRect().size.height / 2);
+        this->triggerGameOver();
+    }
+    
+    // Check Obstacle Collision
     Rect characterRect = this->character->getRect();
     for (auto obstacle : this->obstacles) {
         auto obstacleRects = obstacle->getRects();
@@ -165,6 +185,7 @@ void MainScene::update(float dt)
             }
         }
     }
+    
 }
 
 void MainScene::createObstacle(float dt)
@@ -202,4 +223,5 @@ void MainScene::triggerPlaying(){
 void MainScene::triggerGameOver(){
     this->state = State::GameOver;
     this->unscheduleAllCallbacks();
+    this->character->stopFly();
 }

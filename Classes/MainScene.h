@@ -36,9 +36,11 @@ private:
     Character* character;
     cocos2d::Vector<Obstacle*> obstacles;
     cocos2d::Node* backGround;
-    cocos2d::Node* ground;
+    cocos2d::Node* groundA;
+    cocos2d::Node* groundB;
     
     State state;
+    
 };
 
 #endif // __MAIN_SCENE_H__
