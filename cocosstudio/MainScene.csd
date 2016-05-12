@@ -19,7 +19,7 @@
                 <PreSize X="0.0000" Y="0.0000" />
                 <FileData Type="Normal" Path="Character.csd" Plist="" />
               </AbstractNodeData>
-              <AbstractNodeData Name="ground_3" ActionTag="-999226483" Tag="9" IconVisible="False" RightMargin="-48.0000" TopMargin="402.0000" BottomMargin="-2.0000" ctype="SpriteObjectData">
+              <AbstractNodeData Name="ground" ActionTag="-999226483" Tag="9" IconVisible="False" RightMargin="-48.0000" TopMargin="402.0000" BottomMargin="-2.0000" ctype="SpriteObjectData">
                 <Size X="336.0000" Y="112.0000" />
                 <AnchorPoint ScaleY="1.0000" />
                 <Position Y="110.0000" />

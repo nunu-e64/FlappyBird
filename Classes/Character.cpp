@@ -37,6 +37,17 @@ bool Character::init() {
 void Character::onEnter()
 {
     Node::onEnter();
+    
+    Sprite* spriteBird = this->getChildByName<Sprite*>("bird");
+    this->rect = spriteBird->getBoundingBox();
+    
+    Sprite* sprite = Sprite::create();
+    sprite->setTextureRect(this->rect);
+    sprite->setColor(Color3B::WHITE);
+    sprite->setOpacity(100);
+    this->addChild(sprite);
+    
+    birdSize = spriteBird->getContentSize() * 0.8f;
 }
 
 void Character::onExit()
@@ -55,4 +66,11 @@ void Character::jump()
 {
     this->hasStarted = true;
     this->velocity = JUMP_SPEED;
+}
+
+Rect Character::getRect()
+{
+    Rect rect = this->rect;
+    rect.origin += this->getPosition();
+    return rect;
 }

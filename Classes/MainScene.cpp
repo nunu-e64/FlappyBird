@@ -106,6 +106,9 @@ bool MainScene::init()
     assert(this->ground);
     assert(this->character);
     
+    this->backGround->setGlobalZOrder(-1);
+    this->ground->setGlobalZOrder(1);
+    
     return true;
 }
 
@@ -127,20 +130,37 @@ void MainScene::onEnter()
 
 void MainScene::update(float dt)
 {
+    // Move Obstacle
     for (auto obstacle : this->obstacles) {
         obstacle->moveLeft(SCROLL_SPEED_X * dt);
+    }
+
+    // Collision Check
+    Rect characterRect = this->character->getRect();
+    for (auto obstacle : this->obstacles) {
+        auto obstacleRects = obstacle->getRects();
+        obstacle->moveLeft(SCROLL_SPEED_X * dt);
+        
+        for (Rect obstacleRect : obstacleRects) {
+            bool hit = characterRect.intersectsRect(obstacleRect);
+            CCLOG("%s%f", (hit ? "Hit    " : "Not Hit"), dt);
+        }
     }
 }
 
 void MainScene::createObstacle(float dt)
 {
+    // Create
     Obstacle* obstacle = dynamic_cast<Obstacle*>(CSLoader::createNode(("Obstacle.csb")));
     this->addChild(obstacle);
     assert(obstacle);
 
+    // Set Random PositionY
+    obstacle->setGlobalZOrder(0);
     obstacle->setPosition(Vec2(OBSTACLE_INIT_X, Lerp(OBSTACLE_MIN_Y, OBSTACLE_MAX_Y, CCRANDOM_0_1())));
     this->obstacles.pushBack(obstacle);
     
+    // Delete Obstacle
     if (this->obstacles.size() > OBSTACLE_LIMIT) {
         this->obstacles.front()->removeFromParent();
         this->obstacles.erase(this->obstacles.begin());

@@ -31,6 +31,26 @@ bool Obstacle::init() {
 void Obstacle::onEnter()
 {
     Node::onEnter();
+
+    Sprite* pipeT = this->getChildByName<Sprite*>("pipe_top");
+    Rect rectT = pipeT->getBoundingBox();
+    this->rects.push_back(rectT);
+
+    Sprite* pipeB = this->getChildByName<Sprite*>("pipe_bottom");
+    Rect rectB = pipeB->getBoundingBox();
+    this->rects.push_back(rectB);
+    
+    bool isFirst = false;
+    for (Rect pipeRect : this->rects) {
+        Sprite* sprite = Sprite::create();
+        sprite->setTextureRect(pipeRect);
+        sprite->setColor((isFirst ? Color3B::RED : Color3B::BLUE));
+        sprite->setOpacity(100);
+        this->addChild(sprite);
+        sprite->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        sprite->setPosition(pipeRect.origin.x, pipeRect.origin.y);
+        isFirst = true;
+    }
 }
 
 void Obstacle::onExit()
@@ -41,4 +61,16 @@ void Obstacle::onExit()
 void Obstacle::moveLeft(float distance)
 {
     this->setPosition(this->getPosition() + Vec2(-distance, 0));
+}
+
+std::vector<Rect> Obstacle::getRects()
+{
+    std::vector<Rect> rects;
+    for (auto rectPipe : this->rects)
+    {
+        Rect rect = rectPipe;
+        rect.origin += this->getPosition();
+        rects.push_back(rect);
+    }
+    return rects;
 }

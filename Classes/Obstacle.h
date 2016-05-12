@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
+#include <vector>
 
 class Obstacle : public cocos2d::Node {
 public:
@@ -18,6 +19,7 @@ public:
     bool init() override;
     
     void moveLeft(float distance);
+    std::vector<cocos2d::Rect> getRects();
 
 protected:
     cocostudio::timeline::ActionTimeline* timeline;
@@ -25,6 +27,7 @@ protected:
     void onEnter() override;
     void onExit() override;
 
+    std::vector<cocos2d::Rect> rects;
 };
 
 #endif /* defined(__FlappyBird__Obstacle__) */

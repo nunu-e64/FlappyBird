@@ -17,6 +17,7 @@ public:
     CREATE_FUNC(Character);
     bool init() override;
     void jump();
+    cocos2d::Rect getRect();
 
 protected:
     cocostudio::timeline::ActionTimeline* timeline;
@@ -28,6 +29,8 @@ protected:
     float velocity;
     float accel;
     bool hasStarted;
+    cocos2d::Rect rect;
+    cocos2d::Size birdSize;
 };
 
 #endif /* defined(__FlappyBird__Character__) */
