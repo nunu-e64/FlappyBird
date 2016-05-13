@@ -41,6 +41,16 @@
                 <FileData Type="Normal" Path="Assets/stage/ground.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />
               </AbstractNodeData>
+              <AbstractNodeData Name="score_label" ActionTag="1864134823" Tag="20" IconVisible="False" LeftMargin="133.0000" RightMargin="131.0000" TopMargin="185.0000" BottomMargin="273.0000" LabelText="0" ctype="TextBMFontObjectData">
+                <Size X="24.0000" Y="54.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position X="145.0000" Y="300.0000" />
+                <Scale ScaleX="1.3000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition X="0.5035" Y="0.5859" />
+                <PreSize X="0.0833" Y="0.1055" />
+                <LabelBMFontFile_CNB Type="Normal" Path="Assets/font/font1.fnt" Plist="" />
+              </AbstractNodeData>
             </Children>
             <AnchorPoint />
             <Position />

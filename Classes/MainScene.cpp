@@ -103,11 +103,13 @@ bool MainScene::init()
     this->character = backGround->getChildByName<Character*>("character");
     this->groundA = this->backGround->getChildByName("groundA");
     this->groundB = this->backGround->getChildByName("groundB");
+    this->scoreLabel = this->backGround->getChildByName<ui::TextBMFont*>("score_label");
     
-    this->backGround->setGlobalZOrder(-1);
-    this->groundA->setGlobalZOrder(1);
-    this->groundB->setGlobalZOrder(1);
-    this->character->setGlobalZOrder(1);
+    this->backGround->setLocalZOrder(-1);
+    this->groundA->setLocalZOrder(1);
+    this->groundB->setLocalZOrder(1);
+    this->character->setLocalZOrder(1);
+    this->scoreLabel->setLocalZOrder(2);
     
     return true;
 }
@@ -145,15 +147,53 @@ void onTouchBegan(Touch* touch, Event* event)
 
 void MainScene::update(float dt)
 {
+    switch (this->state) {
+        case State::Ready:
+            updateReady(dt);
+            break;
+        case State::Playing:
+            updatePlaying(dt);
+            break;
+        case State::GameOver:
+            updateGameOver(dt);
+            break;
+        default:
+            break;
+    }
+}
+
+void MainScene::updateReady(float dt)
+{
+    float distance = SCROLL_SPEED_X * dt;
+    
+    // Move Ground
+    this->groundA->setPosition(this->groundA->getPosition() + Vec2(-distance, 0));
+    this->groundB->setPosition(this->groundB->getPosition() + Vec2(-distance, 0));
+    
+    // Check Ground Position
+    auto groundScrollCheck = [&](Node* ground, Node* baddyGround) {
+        if (ground->getPositionX() + ground->getContentSize().width < 0)
+        {
+            ground->setPosition(baddyGround->getPosition() + Vec2(1, 0) * baddyGround->getContentSize().width);
+        }
+    };
+    groundScrollCheck(this->groundA, this->groundB);
+    groundScrollCheck(this->groundB, this->groundA);
+}
+
+void MainScene::updatePlaying(float dt)
+{
+    float distance = SCROLL_SPEED_X * dt;
+    
     // Move Obstacle
     for (auto obstacle : this->obstacles) {
-        obstacle->moveLeft(SCROLL_SPEED_X * dt);
+        obstacle->moveLeft(distance);
     }
     
     // Move Ground
-    this->groundA->setPosition(this->groundA->getPosition() + Vec2(-1, 0) * SCROLL_SPEED_X * dt);
-    this->groundB->setPosition(this->groundB->getPosition() + Vec2(-1, 0) * SCROLL_SPEED_X * dt);
-
+    this->groundA->setPosition(this->groundA->getPosition() + Vec2(-distance, 0));
+    this->groundB->setPosition(this->groundB->getPosition() + Vec2(-distance, 0));
+    
     // Check Ground Position
     auto groundScrollCheck = [&](Node* ground, Node* baddyGround) {
         if (ground->getPositionX() + ground->getContentSize().width < 0)
@@ -175,7 +215,6 @@ void MainScene::update(float dt)
     Rect characterRect = this->character->getRect();
     for (auto obstacle : this->obstacles) {
         auto obstacleRects = obstacle->getRects();
-        obstacle->moveLeft(SCROLL_SPEED_X * dt);
         
         for (Rect obstacleRect : obstacleRects) {
             bool hit = characterRect.intersectsRect(obstacleRect);
@@ -185,6 +224,21 @@ void MainScene::update(float dt)
             }
         }
     }
+    
+    // Add Score
+    float characterX = this->character->getPositionX();
+    for (auto obstacle : this->obstacles) {
+        float obstacleX = obstacle->getPositionX();
+        if (characterX >= obstacleX && characterX - distance < obstacleX)
+        {
+            this->addScore();
+        }
+            
+    }
+}
+
+void MainScene::updateGameOver(float dt)
+{
     
 }
 
@@ -196,7 +250,7 @@ void MainScene::createObstacle(float dt)
     assert(obstacle);
 
     // Set Random PositionY
-    obstacle->setGlobalZOrder(0);
+    obstacle->setLocalZOrder(0);
     obstacle->setPosition(Vec2(OBSTACLE_INIT_X, Lerp(OBSTACLE_MIN_Y, OBSTACLE_MAX_Y, CCRANDOM_0_1())));
     this->obstacles.pushBack(obstacle);
     
@@ -209,6 +263,7 @@ void MainScene::createObstacle(float dt)
 
 void MainScene::triggerReady()
 {
+    this->score = 0;
     this->state = State::Ready;
     this->character->stopFly();
 }
@@ -223,5 +278,9 @@ void MainScene::triggerPlaying(){
 void MainScene::triggerGameOver(){
     this->state = State::GameOver;
     this->unscheduleAllCallbacks();
-    this->character->stopFly();
+}
+
+void MainScene::addScore()
+{
+    this->scoreLabel->setString(std::to_string(++score));
 }

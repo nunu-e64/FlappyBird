@@ -60,6 +60,7 @@ void Obstacle::onExit()
 
 void Obstacle::moveLeft(float distance)
 {
+    CCLOG("distance: %f", distance);
     this->setPosition(this->getPosition() + Vec2(-distance, 0));
 }
 

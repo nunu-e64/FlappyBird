@@ -62,7 +62,7 @@ void Character::update(float dt)
     
     if (this->isFlying)
     {
-        this->velocity += this->accel;
+        this->velocity += this->accel * dt;
         this->setPosition(this->getPosition() + Vec2(0, this->velocity * dt));
     }
 }
